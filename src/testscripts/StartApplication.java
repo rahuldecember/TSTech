@@ -1,4 +1,4 @@
-package test;
+package testscripts;
 
 import io.appium.java_client.ios.IOSDriver;
 import utility.FlickrApiResponse;
