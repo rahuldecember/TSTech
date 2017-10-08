@@ -1,5 +1,8 @@
 package stepDefinition;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -19,12 +22,11 @@ public class HomePageSteps extends AppiumBaseClass {
 	protected HomeScreenPage homeScreenPage;
 	Items items = new Items();
 
-	HashMap<Integer, String> dataFromUI = new HashMap<Integer, String>();
-	HashMap<Integer, String> dataFromApi = new HashMap<Integer, String>();
+	HashMap<Integer, String> dataFromUI, dataFromApi = new HashMap<Integer, String>();
 
 	@Before
 	public void setUp() throws Exception {
-		System.out.println("before");
+
 		AppiumController.instance.start();
 		switch (AppiumController.executionOS) {
 		case ANDROID:
@@ -64,13 +66,9 @@ public class HomePageSteps extends AppiumBaseClass {
 
 	@Then("^Titles verified Successfully$")
 	public void message_Displayed_Logout_Successfully() throws Throwable {
-		if (dataFromUI.size() == dataFromApi.size()) {
-			items.verify(dataFromUI, dataFromApi);
-			System.out.println("Titles verified Successfully");
-		}else {
-			System.out.println("Test Fails");
-		}
-		
+		assertEquals(dataFromUI.size(), dataFromApi.size(), "Title Count not equal");
+		assertTrue(items.verify(dataFromUI, dataFromApi), "Title are not same");
+
 	}
 
 }
