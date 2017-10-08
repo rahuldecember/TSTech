@@ -54,9 +54,9 @@ public class HomePageSteps extends AppiumBaseClass {
 	}
 
 	@Then("^Search Result displayed Successfully$")
-	public void message_displayed_Login_Successfully() throws Throwable {
+	public void message_displayed_Result_Successfully() throws Throwable {
 		dataFromUI = homeScreenPage.getImagesTitles();
-		System.out.println("Login Successfully");
+		System.out.println("Result Displayed Successfully");
 	}
 
 	@Then("^Get Data using API \"(.*)\"$")
