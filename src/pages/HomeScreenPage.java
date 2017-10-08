@@ -1,79 +1,72 @@
 package pages;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.CacheLookup;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.pagefactory.iOSFindBy;
 
+public class HomeScreenPage {
+	private AppiumDriver driver;
 
+	public HomeScreenPage(AppiumDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(new AppiumFieldDecorator(driver, 5, TimeUnit.SECONDS), this);
+	}
 
-public class HomeScreenPage{
+	public void enterSearchValue(String searchValue) {
 
-	private IOSDriver driver; 
-    PageObjects loginPage;
+		System.out.println("Home_Screen_Page_PAGE: Enter Search Text...");
 
+		if (homeSearchFld != null) {
+			System.out.println(homeSearchFld);
+			homeSearchFld.click();
+			homeSearchFld.setValue(searchValue);
 
-    public HomeScreenPage(IOSDriver driver) {  
-        this.driver = driver;  
-        PageFactory.initElements(new AppiumFieldDecorator(driver, 30, TimeUnit.SECONDS), this);  
-      } 
-    
-    public void enterSearchValue(String searchValue){
-    	
-    	System.out.println("Home_Screen_Page_PAGE: Enter Search Text...");  
-	WebDriverWait wait = new WebDriverWait(this.driver, 30);  
-	wait.until(ExpectedConditions.visibilityOf(loginPage.homeSearchFld));
-    	loginPage.homeSearchFld.sendKeys(searchValue);
-    }
-    
-    public boolean validateLoginpage(){
-        boolean elements = true;
-        if(loginPage.homeSearchFld.isDisplayed()){
-//            if(loginPage.passwordField.isDisplayed()){
-//                if(loginPage.checkBox.isDisplayed()){
-//                    if(loginPage.loginBtn.isDisplayed()){
-//                        elements = true;
-//                    }
-//                }
-//            }
-//        }
-//        else{
-//            elements = false;
-        }
-        return elements;
+			// sendKeys(searchValue);
+		} else {
+			System.out.println("homeSearchFld null");
+		}
 
+	}
 
-    }
+	public int getImagesCount() {
+		int count = 0;
+		List<MobileElement> elements = driver.findElements(By.xpath(
+				"/AppiumAUT/XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeCollectionView/XCUIElementTypeCell"));
+		count = elements.size();
+		return count;
+	}
 
-    public boolean testLoginWithoutCredentials() {
-        boolean loginStatus = false;
- //      loginPage.loginBtn.click();
-//        if (loginPage.inputError.getText().equalsIgnoreCase("Username is mandatory")) {
-//            loginStatus = true;
-//        }
-//        loginPage.userNameFld.sendKeys(userName);
-//        loginPage.loginBtn.click();
-//        if (loginPage.inputError.getText().equalsIgnoreCase("Password is mandatory")) {
-//            loginStatus = true;
-//        }
-        return loginStatus;
+	public HashMap<Integer, String> getImagesTitles() {
+		HashMap<Integer, String> hmap = new HashMap<>();
+		int count = getImagesCount();
 
-    }
-    
+		if (count > 0) {
+			for (int i = 0; i < count; i++) {
+				String title = driver.findElement(By.xpath(
+						"/AppiumAUT/XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeCollectionView/XCUIElementTypeCell[" + i +"]/XCUIElementTypeStaticText")).getText();
+				hmap.put(i, title);
+			}
+		}
 
-    class PageObjects {
+		return hmap;
+	}
 
-        @CacheLookup
-        @FindBy(xpath = "//XCUIElementTypeSearchField/XCUIElementTypeSearchField")
-        public WebElement homeSearchFld;
+	@iOSFindBy(xpath = "/AppiumAUT/XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeSearchField/XCUIElementTypeSearchField")
+	public MobileElement homeSearchFld;
 
+	@iOSFindBy(xpath = "//XCUIElementTypeApplication[@name=\"FlickrBrowser-cal\"]")
+	public MobileElement homeSearchFld1;
 
-    }
+	public MobileElement getFirstSearchResult() {
+		return homeSearchFld;
+	}
+
 }
