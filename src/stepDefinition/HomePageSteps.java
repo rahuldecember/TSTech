@@ -65,7 +65,7 @@ public class HomePageSteps extends AppiumBaseClass {
 	}
 
 	@Then("^Titles verified Successfully$")
-	public void message_Displayed_Logout_Successfully() throws Throwable {
+	public void message_Titles_verified_Successfully() throws Throwable {
 		assertEquals(dataFromUI.size(), dataFromApi.size(), "Title Count not equal");
 		assertTrue(items.verify(dataFromUI, dataFromApi), "Title are not same");
 
