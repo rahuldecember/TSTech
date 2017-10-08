@@ -13,6 +13,7 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class HomeScreenPage {
+	
 	private AppiumDriver driver;
 
 	public HomeScreenPage(AppiumDriver driver) {
@@ -64,9 +65,5 @@ public class HomeScreenPage {
 
 	@iOSFindBy(xpath = "//XCUIElementTypeApplication[@name=\"FlickrBrowser-cal\"]")
 	public MobileElement homeSearchFld1;
-
-	public MobileElement getFirstSearchResult() {
-		return homeSearchFld;
-	}
 
 }
