@@ -1,15 +1,11 @@
 @featureTest
-Feature: Login Action
+Feature: UI data Test
 
 @Scenario1
-Scenario: Successful Search of Images on Flikr App
+Scenario: Search of Images on Flikr App
 	Given User is on Home Screen
-	When User searches for "continents"
-#	And  User Navigate to LogIn Page
+	When User searches for images with "continents" text.
 	Then Search Result displayed Successfully
-
-@Scenario2
-Scenario: Verify Images Titles
-	When Get Data using API
+	Then Get Data using API "continents"
 	Then Titles verified Successfully
 
